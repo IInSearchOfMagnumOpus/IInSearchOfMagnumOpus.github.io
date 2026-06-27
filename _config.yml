@@ -1,8 +1,0 @@
-title: ritikesh dutt
-description: Systems programming in Rust — typestate, compile-time invariants, zero-cost abstractions.
-
-url: https://iinsearchofmagnumopus.github.io
-theme: minima
-plugins:
-  - jekyll-sitemap
-  - jekyll-seo-tag
