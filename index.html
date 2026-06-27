@@ -29,7 +29,7 @@
         }
         body::-webkit-scrollbar { display: none; }
         html { scroll-behavior: smooth; }
-
+        a:focus-visible, .btn:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
         body {
             margin: 0;
             min-height: 100vh;
@@ -45,7 +45,8 @@
             align-items: center;
             overflow-x: hidden;
         }
-
+        .js .repo-layer { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .js .repo-layer.visible { opacity: 1; transform: none; }
         body::before {
             content: '';
             position: fixed;
@@ -318,7 +319,10 @@
             padding-top: 24px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
-
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+            .js .repo-layer { opacity: 1 !important; transform: none !important; }
+        }
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .hero-subtitle { font-size: 1rem; }
@@ -558,6 +562,15 @@
     </div>
     <div class="footer-copyright">© 2026 ritikesh dutt — built with 🦀</div>
 </footer>
-
+<script>
+    document.documentElement.classList.add('js');
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      }
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.repo-layer').forEach((el) => io.observe(el));
+</script>
 </body>
+
 </html>
